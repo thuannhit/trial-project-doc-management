@@ -9,6 +9,7 @@ export interface IDocument extends Document {
     ktp_number: string;
     npwp_number: string;
     passport_number: string;
+    is_deleted: boolean
 }
 
 export const documentSchema: Schema = new Schema({
@@ -19,7 +20,8 @@ export const documentSchema: Schema = new Schema({
     address: String,
     ktp_number: String,
     npwp_number: String,
-    passport_number: String
+    passport_number: String,
+    is_deleted: Boolean
 });
 
 export const Documents: Model<IDocument> = model<IDocument>("Documents", documentSchema);

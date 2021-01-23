@@ -8,7 +8,6 @@ environments.development = {
   jwtAccessExpires: process.env.JWT_ACCESS_TIMEOUT,
   jwtRefreshSecretKey: process.env.JWT_REFRESH_SECRET,
   jwtRefreshExpires: process.env.JWT_REFRESH_TIMEOUT,
-  site: "http://127.0.0.1:3000",
 };
 environments.production = {
   port: 8000,
@@ -18,7 +17,6 @@ environments.production = {
   jwtAccessExpires: process.env.JWT_ACCESS_TIMEOUT,
   jwtRefreshSecretKey: process.env.JWT_REFRESH_SECRET,
   jwtRefreshExpires: process.env.JWT_REFRESH_TIMEOUT,
-  site: "https://abc.com.vn",
 };
 // tslint:disable-next-line:no-console
 // console.log('environments', environments)

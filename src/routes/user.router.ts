@@ -3,7 +3,7 @@ import { check, sanitizeBody, body } from "express-validator";
 import passport from "passport";
 import * as userController from "../controllers/user.controller";
 const router = Router();
-
+import {} from '../auth/auth.guards'
 const  wrapAsync=(fn: any)=> {
   return (req: Request, res: Response, next: NextFunction) =>{
     fn(req, res, next).catch(next);
@@ -41,6 +41,12 @@ router.get(
   "/",
     (req: Request, res: Response) => {
     wrapAsync(userController.getUsersList(req, res));
+  }
+);
+router.get(
+  "/:id",
+    (req: Request, res: Response) => {
+    wrapAsync(userController.getOneUser(req, res));
   }
 );
 

@@ -1,11 +1,10 @@
 import bcrypt from "bcrypt";
-import { NextFunction, Request, Response } from "express";
+import { Request, Response } from "express";
 import { User } from "../models/user";
 import * as jwt from "jsonwebtoken";
 import config from "../config";
 
-export const createUser = async (req: any, res: any) => {
-    const a = 1;
+export const createUser = async (req: Request, res: Response) => {
     const hashedPassword = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10));
 
     const rs = await User.create({
@@ -16,15 +15,15 @@ export const createUser = async (req: any, res: any) => {
 
     const token = jwt.sign({ username: req.body.username, scope: req.body.scope }, config.jwtAccessSecretKey);
     res.status(200).send({ token, user: rs });
-    // tslint:disable-next-line:no-console
-    console.log('Enter user')
 }
 
-export const getUsersList = async (req: any, res: any) => {
-
-    const rs = await User.find();
-
+export const getUsersList = async (req: Request, res: Response) => {
+    const rs = await User.find().select('-password');
     res.status(200).send({ users: rs });
-    // tslint:disable-next-line:no-console
-    console.log('Enter user')
+}
+
+export const getOneUser = async (req: Request, res: Response) => {
+    const userId: string = req.params.id
+    const rs = await User.findOne({ _id: userId});
+    res.status(200).send({ user: {emai: rs.email, _id: rs._id} });
 }

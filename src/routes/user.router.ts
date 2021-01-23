@@ -11,7 +11,7 @@ const  wrapAsync=(fn: any)=> {
 }
 
 router.post(
-  "/user",
+  "/",
   [
     // Check the form and validated it before submitting
     check("email", "Email is not valid").isEmail(),
@@ -35,6 +35,12 @@ router.post(
   ],
   (req: Request, res: Response) => {
     wrapAsync(userController.createUser(req, res));
+  }
+);
+router.get(
+  "/",
+    (req: Request, res: Response) => {
+    wrapAsync(userController.getUsersList(req, res));
   }
 );
 

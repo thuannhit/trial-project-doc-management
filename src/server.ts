@@ -13,7 +13,7 @@ if (major < 10 || (major === 10 && minor <= 8)) {
 }
 
 // Connect to our Database and handle any bad connections
-mongoose.connect(config.database, { useNewUrlParser: true });
+mongoose.connect(config.database, { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.Promise = global.Promise; // Tell Mongoose to use ES6 promises
 mongoose.connection.on("error", (err) => {
   // tslint:disable-next-line:no-console

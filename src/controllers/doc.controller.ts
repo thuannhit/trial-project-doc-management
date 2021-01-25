@@ -39,15 +39,14 @@ export const getDoccuments = async (req: ReqWithUser, res: any) => {
     const query = req.query
     const limit: number = query.limit ? Number(query.limit): 10
     const offset: number = query.offset ? Number(query.offset): 0
-    const nameString = query.nameString ? query.nameString : ''
-    const total = await Documents.find({ created_by: req.user._id, is_deleted: false }).count()
-    const stringReg = `/${nameString}/`
-    const reg= new RegExp(stringReg)
-    const rs = await Documents.find({ created_by: req.user._id, is_deleted: false }).skip(offset).limit(limit);
+    const nameString = query.nameString ? query.nameString.toString() : ''
+    const reg=  new RegExp(nameString);
+
+    const total = await Documents.find({ created_by: req.user._id, is_deleted: false, email: reg }).count()
+
+    const rs = await Documents.find({ created_by: req.user._id, is_deleted: false, email: reg }).skip(offset).limit(limit);
 
     res.status(200).send({ documents: rs, total, limit, offset});
-    // tslint:disable-next-line:no-console
-    console.log("Enter user");
 };
 
 export const getDoccument = async (req: ReqWithUser, res: any) => {
@@ -55,8 +54,6 @@ export const getDoccument = async (req: ReqWithUser, res: any) => {
     const rs = await Documents.findOne({ created_by: req.user._id, _id: docId, is_deleted: false });
 
     res.status(200).send({ document: rs });
-    // tslint:disable-next-line:no-console
-    console.log("Enter user");
 };
 
 export const updateDocumentAllProperties = async (
@@ -78,7 +75,7 @@ export const updateDocumentAllProperties = async (
 
     res.status(200).send({ document: rs });
     // tslint:disable-next-line:no-console
-    console.log("Enter user");
+    console.log("Finished updating");
 };
 
 export const deleteDocument = async (

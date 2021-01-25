@@ -1,14 +1,15 @@
 import { Request, Response, NextFunction, Router } from "express";
-import { check, sanitizeBody, body } from "express-validator";
-import passport from "passport";
+import { check, body } from "express-validator";
 import * as userController from "../controllers/user.controller";
+import { AuthGuards } from "../auth/auth.guards";
 const router = Router();
-import {} from '../auth/auth.guards'
-const  wrapAsync=(fn: any)=> {
-  return (req: Request, res: Response, next: NextFunction) =>{
+const authGuard = new AuthGuards();
+
+const wrapAsync = (fn: any) => {
+  return (req: Request, res: Response, next: NextFunction) => {
     fn(req, res, next).catch(next);
   };
-}
+};
 
 router.post(
   "/",
@@ -37,17 +38,17 @@ router.post(
     wrapAsync(userController.createUser(req, res));
   }
 );
+
 router.get(
   "/",
-    (req: Request, res: Response) => {
-    wrapAsync(userController.getUsersList(req, res));
-  }
+  authGuard.authenticateJWT,
+  wrapAsync(userController.getUsersList)
 );
+
 router.get(
   "/:id",
-    (req: Request, res: Response) => {
-    wrapAsync(userController.getOneUser(req, res));
-  }
+  authGuard.authenticateJWT,
+  wrapAsync(userController.getOneUser)
 );
 
 export default router;

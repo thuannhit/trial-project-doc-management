@@ -1,6 +1,4 @@
 import { Request, Response, NextFunction, Router } from "express";
-import { check, sanitizeBody, body } from "express-validator";
-import passport from "passport";
 import * as DocumentController from "../controllers/doc.controller";
 const router = Router();
 import { AuthGuards } from "../auth/auth.guards";

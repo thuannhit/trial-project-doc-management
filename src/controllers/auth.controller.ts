@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import * as jwt from "jsonwebtoken";
 import config from "../config";
 import "../auth/passport.strategies";
+
 interface ReqWithUser extends Request {
   user: {
     _id: any;

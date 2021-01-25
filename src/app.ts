@@ -4,14 +4,12 @@ import dotenv from "dotenv";
 import passport from "passport";
 import logger from "morgan";
 import path from "path";
-import flash from "connect-flash";
 import compression from "compression";
 import cors from "cors";
 import helmet from "helmet";
 import bodyParser from 'body-parser';
 import errorHandler from "errorhandler";
 dotenv.config();
-// import indexRouter from "./routes/index";
 import routerIndex from "./routes"
 import swagger from './_helpers/swagger'
 // import "./handlers/passport";
@@ -38,34 +36,6 @@ app.use(express.static(path.join(__dirname, "../public")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// app.use(
-//     session({
-//         name: process.env.SESSION_NAME,
-//         secret: process.env.SECRET,
-//         resave: false,
-//         saveUninitialized: false,
-//         store: new MongoStore({ mongooseConnection: mongoose.connection }),
-//     }),
-// );
-
-// Passport JS is what we use to handle our logins
-// app.use(passport.initialize());
-// app.use(passport.session());
-
-// The flash middleware let's us use req.flash('error', 'Shit!'), which will then pass that message to the next page the user requests
-// app.use(flash());
-
-// pass variables to our templates + all requests
-// app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
-//     res.locals.flashes = req.flash();
-//     res.locals.user = req.user || null;
-//     res.locals.currentPath = req.path;
-//     next();
-// });
-
-//  Express Routing URLS
-// app.use("/", indexRouter);
-// app.use("/api/auth", authRouter);
 app.use("/api", routerIndex);
 
 // swagger docs route
